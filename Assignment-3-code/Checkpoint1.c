@@ -241,6 +241,23 @@ void print_transactions(){
 *******************************************************************************/
 
 void add_student (){
+    FILE *students;
+    int i;
+    students = fopen(FILE_NAME,"w"); /*open file in write mode*/
+    for(i=0;i<=db_size;i++)
+    {
+    /*save everything to file*/
+    fprintf(students,"%s %s %s %d %d %d %s %d %s %d %d", 
+            user[i].first_name,
+            user[i].last_name, user[i].user_id,
+            user[i].date_t.day, user[i].date_t.month,
+            user[i].date_t.year,
+            payment[i].student_id, payment[i].card_number,
+            payment[i].card_holder, payment[i].expiry, payment[i].CVC);
+    }
+    fclose(database);
+
+    return;
 
 }
 
