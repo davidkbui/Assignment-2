@@ -7,11 +7,7 @@
 #include <string.h>
 #include <math.h>
 
-#include "admin.h"
-#include "compression.h"
-#include "encryption.h"
 #include "interface.h"
-#include "student.h"
 
 #define MAX_NO_ITEMS 9
 #define MAX_NO_FIRSTNAME 20
@@ -79,21 +75,6 @@ typedef struct item item_t;
 /*******************************************************************************
  * Function prototypes
 *******************************************************************************/
-void load_items(item_t *items);
-void intro_prompt();
-void login(user_t *users);
-void open_admin_prompt();
-void open_user_console(user_t user);
-void register_user();
-int save_db(const user_t *users_p);
-int load_user(user_t *users_p);
-int is_admin (int ID);
-void search_for_student();
-void edit();
-void print();
-void add ();
-void encrypt ();
-void compress ();
 
 
 /*******************************************************************************
@@ -102,10 +83,14 @@ void compress ();
 *******************************************************************************/
 int main (void)
 {
-    item_t items[MAX_NO_ITEMS];
-    load_items(items);
-    user_t users[MAX_NO_USERS];
-    load_user(users);
-    /*menu would loop unless user enters 3 */
-    open_user_prompt
+    intro_prompt();
+
+    int selection = getChoice();
+
+    if(selection == -1) {                 /*If invalid selection, back to menu*/
+      main();
+    }
+
+    inputCases(selection);           /*Goes through the options based on input*/
+    return 0;
 }
