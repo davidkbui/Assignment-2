@@ -1,39 +1,168 @@
 /*******************************************************************************
  * STUDENT - AUTHOR: JOEL MORRISON
 *******************************************************************************/
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+/*******************************************************************************
+ * List preprocessing directives
+*******************************************************************************/
+#define DB_NAME "student_database"
+#define TRANSACTION_DB_NAME "transactions"
+
+/*******************************************************************************
+ * Struct
+*******************************************************************************/
+struct student{
+    int iD; 
+    int bankDetails;
+    int expiryMonth; 
+    int expiryYear;
+    int ccv;
+
+};
+typedef struct student student_t;
+
+/*******************************************************************************
+ * Function Prototypes
+*******************************************************************************/
+void student_menu();
+void check_my_details();
+void update_my_details();
+void view_my_transactions();
+void inputCases (int selection);
 
 
 /*******************************************************************************
- * This function prints the available options for the student
+ * This function prints the available options for the student 
  * user to chose from.
- * Author: Hayeon Kim
 *******************************************************************************/
+student_t student, students [10];
 
-void open_user_prompt(){
+int main(void){
+    student_menu();
+    int selection;
+    scanf("%d", &selection);
+    inputCases(selection);
+    return 0;
+}
+
+
+void student_menu()
+{
     printf("\n"
-    "Welcome to UTS uniform order page\n"
-    "1. Order uniform\n"
-    "2. View your transaction\n"
-    "3. Update my payment details\n"
-    "4. Exit\n"
+    "Select an option\n"
+    "1. Check My Details\n"
+    "2. Update My payment details\n"
+    "3. Coming Soon *View My Transactions*\n"
+    "5. Exit\n"
     "Enter choice 1 - 4>\n");
 }
 
 /*******************************************************************************
- * This function allows the user to edit and then update their details
- * in the database
- * Author: David Bui
+ * This function reads the choice of the user and runs the case that corresponds
+ to the user input.
+ * outputs:
+ * - cases
 *******************************************************************************/
-void edit_details(){
-
+void inputCases (int selection)
+{
+    switch(selection) 
+    {
+      case 1: check_my_details(); break;
+      case 2: update_my_details(); break;
+      case 3: view_my_transactions(); break;
+      case 4: exit(0); break;
+    }
 }
 
 /*******************************************************************************
- * Function prints the history for either the day, month or year of previous
- * transactions, depending on what the user has selected.
- * Author: Mitch Winyard
+ * This function allows the user to edit and then update their details
+ * in the database 
 *******************************************************************************/
+void check_my_details()
+{
+    FILE * fPtr;
+    fPtr  = fopen(DB_NAME, "r");
+    char ans[6];
+    char line[20];
+    int linenum =0;
+    int foundline =(linenum) ;
+    int lineStop = (foundline+5);
 
-void print_transactions(){
+    /* return NULL if unable to open file. */
+    if (fPtr == NULL)
+    {
+        printf("\nUnable to open file.\n");
+        exit(EXIT_SUCCESS);
+    }
+
+    printf("Enter ID>\n");
+    scanf ("%s", ans);
+    while (fgets(line, sizeof line, fPtr) != NULL) 
+    {   
+          
+        linenum++;
+        if (strncmp(ans, line,5) ==0)
+        {
+            /*printf("Details found\n" );*/
+            break;
+        }
+    
+        }
+
+   /* printf("User: %s \n",ans); */
+
+    char student_details[256]; 
+    while (fgets( student_details, sizeof  student_details, fPtr) != NULL) 
+        {   
+            if (foundline <= lineStop)
+            {  
+                printf("%s",  student_details);
+                foundline++;
+            }
+            else
+            {
+                foundline++;
+            }
+        }
+
+    /* Close file*/
+    fclose(fPtr);
+
+    main();
+}
+
+
+/*******************************************************************************
+ * This function allows the user to edit and then update their details
+ * in the database 
+*******************************************************************************/
+void update_my_details(){
+
+    /*Not Finished*/
+    scanf("%d", &student.bankDetails);
+
+    printf("Enter expiry >\n");
+    scanf("%d %d", &student.expiryMonth, &student.expiryYear);
+
+    printf("Enter CCV Details>\n");
+    scanf("%d", &student.ccv);
+    main();
+
 
 }
+
+
+/*******************************************************************************
+ * Function prints the history for either the day, month or year of previous 
+ * transactions, depending on what the user has selected.
+*******************************************************************************/
+
+void view_my_transactions(){
+
+       printf("Coming Soon>\n");
+       main();
+    
+}
+
