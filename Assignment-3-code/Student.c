@@ -4,40 +4,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-/*******************************************************************************
- * List preprocessing directives
-*******************************************************************************/
-#define DB_NAME "student_database"
-#define TRANSACTION_DB_NAME "transactions"
-
-/*******************************************************************************
- * Struct
-*******************************************************************************/
-struct student{
-    int iD; 
-    int bankDetails;
-    int expiryMonth; 
-    int expiryYear;
-    int ccv;
-
-};
-typedef struct student student_t;
-
-/*******************************************************************************
- * Function Prototypes
-*******************************************************************************/
-void student_menu();
-void check_my_details();
-void update_my_details();
-void view_my_transactions();
-void inputCases (int selection);
-
 
 /*******************************************************************************
  * This function prints the available options for the student 
  * user to chose from.
 *******************************************************************************/
-student_t student, students [10];
 
 int main(void){
     student_menu();
