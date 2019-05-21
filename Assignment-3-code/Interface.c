@@ -7,6 +7,8 @@
 *******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 
 void print_logo(void){
   printf("_______________________________________"
@@ -52,8 +54,8 @@ void intro_prompt(void){
     print_logo();
     printf("\n"
     "Welcome to UTS uniform order page\n"
-    "1. Existing user\n"
-    "2. New user\n"
+    "1. Student\n"
+    "2. Admin\n"
     "3. Exit\n"
     "Enter choice 1 - 3>\n");
     print_reset_color();
@@ -79,19 +81,48 @@ int getChoice(){
   else return -1;                                   /*Logic for resetting main*/
 }
 
+int matchID(char ID[10]) {
+  int i, x=0, validFlag, p;
+  p = strlen(ID);
+  for (i=0; i<p; i++)
+    {
+      if (ID[i] >= '0' && ID[i] <= '9')
+        {
+          validFlag = 1;
+        }
+      else {
+            printf("Invalid ID, try again\n");
+            scanf("%s", ID);
+            validFlag = 0;
+      }
+    }
+  return validFlag;
+  }
+
 void adminMenu (void) {
-  printf("Admin Menu");
+  char ID[10];
+  printf(
+    "Admin Menu\n"
+    "Type in your ID\n");
+    scanf("%s", &ID[10]);
+    int isValidFlag = matchID(ID);
+    while (isValidFlag == 0)
+      {
+        printf("Invalid ID\n");
+          printf("%d", isValidFlag);
+        scanf("%s", &ID[10]);
+      }
 }
 
-void userMenu (void) {
+void studentMenu (void) {
   printf("User Menu");
 }
 
 void inputCases (int input)
 {
     switch(input) {                                   /*choose function to run*/
-      case 1: adminMenu(); break;
-      case 2: userMenu(); break;
+      case 1: studentMenu(); break;
+      case 2: adminMenu(); break;
       case 3: exit(0); break;
     }
 }
