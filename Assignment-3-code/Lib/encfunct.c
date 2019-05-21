@@ -3,7 +3,7 @@
 *******************************************************************************/
 
 /*******************************************************************************
- * This function encrypts the student database file
+ * These functions are used to prepare the student_database.txt file for encryption
  * Author: Mitch Winyard
 *******************************************************************************/
 #include <stdio.h>
@@ -104,7 +104,11 @@ void encrypt (FILE *fptrt, FILE *fptrs)
     }
     return;
 }
-
+/*******************************************************************************
+ * This function creates a database for the first time and encrypts it. 
+ * Only to be used ONCE
+ * Author: Mitch Winyard
+*******************************************************************************/
 void delete_temp_file ()
 {
     remove("temp.txt");
@@ -124,7 +128,10 @@ void init_db()
     delete_temp_file();    
 
 }
-
+/*******************************************************************************
+ * This function decrypts and opens the student_database.txt file
+ * Author: Mitch Winyard
+*******************************************************************************/
 FILE *open_db ()
 {
     FILE *db_ptr, *fptrt;
@@ -140,7 +147,10 @@ FILE *open_db ()
     rewind (db_ptr);
     return db_ptr;
 }
-
+/*******************************************************************************
+ * This function encrypts and closes the student_database.txt file
+ * Author: Mitch Winyard
+*******************************************************************************/
 void close_db (FILE *db_ptr)
 {
     FILE *fptrt;
