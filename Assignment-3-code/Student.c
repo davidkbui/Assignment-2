@@ -159,10 +159,14 @@ void check_password(const char *ID_number)
 int student_menu(const char *ID_number)
 {
     printf("\n"
+    "------------------\n"
     "Select an option\n"
     "1. Check My Details\n"
     "2. Update My payment details\n"
-    "3. Coming Soon *View My TrID_numberactions*\n"
+
+
+
+    "3. Coming Soon *******\n"
     "4. Exit\n"
     "Enter choice 1 - 4>\n");
 
@@ -359,7 +363,7 @@ int UpdateBankNumber(const char *ID_number)
                 char line[20];
                 int linenum =0;
                 int foundline =(linenum) ;
-                int lineStop = (foundline+4);
+                int lineStop = (foundline+5);
                 char find[100];
                 
                 
@@ -517,7 +521,7 @@ int UpdatePhoneNumber(const char *ID_number)
                 char line[20];
                 int linenum =0;
                 int foundline =(linenum) ;
-                int lineStop = (foundline+3);
+                int lineStop = (foundline+4);
                 char find[100];
                 
                 
@@ -672,7 +676,7 @@ int UpdateCVVNumber(const char *ID_number)
                 char line[20];
                 int linenum =0;
                 int foundline =(linenum) ;
-                int lineStop = (foundline+6);
+                int lineStop = (foundline+7);
                 char find[100];
                 
                 
@@ -828,7 +832,7 @@ int UpdateExpiryNumber(const char *ID_number)
                 char line[20];
                 int linenum =0;
                 int foundline =(linenum) ;
-                int lineStop = (foundline+5);
+                int lineStop = (foundline+6);
                 char find[100];
                 
                 
