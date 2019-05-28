@@ -1,6 +1,7 @@
 /*******************************************************************************
  * STUDENT - AUTHOR: JOEL MORRISON
 *******************************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +9,7 @@
 #define DB_NAME "student_database"
 #define BUFFER_SIZE 1000
 #define ID_SIZE 5
+
 
 
 int Student_Main();
@@ -25,6 +27,7 @@ void replaceOldCVVDetails(char *str, const char *find, const char *newCVVNumber)
 int UpdateCVVNumber(const char *ID_number);
 void replaceOldExpiryDetails(char *str, const char *find, const char *newExpiryNumber);
 int UpdateExpiryNumber(const char *ID_number);
+void check_password(const char *ID_number);
 
 
 
@@ -52,7 +55,7 @@ int Student_Login(){
 
     while (j != 1)
     {
-          scanf ("%s", ID_number);
+        scanf ("%s", ID_number);
       
         p = strlen(ID_number);
         for (i=0; i<p; i++)
@@ -61,7 +64,10 @@ int Student_Login(){
             {
                 j= 1;
                 /*printf("Success\n");*/
-                student_menu(ID_number);
+              /*  CheckPassword(ID_number);*/
+                check_password(ID_number);
+             /*  student_menu(ID_number);*/
+             
             }
             else
             {
@@ -75,6 +81,75 @@ int Student_Login(){
 
     return 0;
 }
+
+
+
+void check_password(const char *ID_number)
+{
+    char ID_password[10];
+    FILE * fPtr;
+    fPtr  = fopen(DB_NAME, "r");
+    char line[20];
+    int linenum =0;
+    int foundline =(linenum) ;
+    int lineStop = (foundline+0);
+
+    /* return NULL if unable to open file. */
+    if (fPtr == NULL)
+    {
+        printf("\nUnable to open file.\n");
+        exit(EXIT_SUCCESS);
+    }
+
+   /* printf("Enter ID>\n");
+    scanf ("%s", ID_number);*/
+    while (fgets(line, sizeof line, fPtr) != NULL) 
+    {   
+          
+        linenum++;
+        if (strncmp(ID_number, line,ID_SIZE) ==0)
+        {
+            /*printf("ID found\n" );*/
+            break;
+        }
+    
+    }
+
+   /* printf("User: %s \n",ID_number); */
+
+    char student_password[256]; 
+    while (fgets( student_password, sizeof  student_password, fPtr) != NULL) 
+        {   
+            if (foundline <= lineStop)
+            {  
+                /*printf("Your password is:%s",  student_password);*/
+
+                    printf("Enter password\n");
+                     scanf ("%s", ID_password);
+
+                     if (strncmp(ID_password, student_password,6)==0)
+                        {
+                    /* printf("succes password is:%s",  student_password);*/
+                         student_menu(ID_number);
+                        fclose(fPtr);
+                             }
+                         else {
+                        printf("Access Denined!!!\n");
+                             fclose(fPtr);
+                          }       
+
+
+                foundline++;
+            }
+            else
+            {
+                foundline++;
+            }
+        }
+
+
+}
+
 
 
 
@@ -816,6 +891,5 @@ void replaceOldExpiryDetails(char *str, const char *find, const char *newExpiryN
 
     }
 }
-
 
 
