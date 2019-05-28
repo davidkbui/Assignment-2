@@ -102,10 +102,6 @@ void compress ();
 *******************************************************************************/
 int main (void)
 {
-    item_t items[MAX_NO_ITEMS];
-    load_items(items);
-    user_t users[MAX_NO_USERS];
-    load_user(users);
-    /*menu would loop unless user enters 3 */
-    open_user_prompt
+    Student_Main();
+    return 0;
 }
