@@ -10,26 +10,21 @@
 #define ID_SIZE 5
 
 
-void findUpdateBank();
-int UpdateDetailsOptions(const char *ID_number);
-void UpdateDetailsSelection (int updateSelect, const char *ID_number);
-int UpdatePhone();
-int UpdateBankNumber(const char *ID_number);
-int UpdateCVV();
-int UpdateExpiry();
 int Student_Main();
 int Student_Login();
 void student_menu(const char *ID_number);
 void check_my_details(const char *ID_number);
-void view_my_trID_numberactions();
 void input_Student_Cases (int studentSelection,const char *ID_number);
+int UpdateDetailsOptions(const char *ID_number);
+void UpdateDetailsSelection (int updateSelect, const char *ID_number);
 void replaceOldBankDetails(char *str, const char *find, const char *newBankNumber);
+int UpdateBankNumber(const char *ID_number);
 void replaceOldPhoneDetails(char *str, const char *find, const char *newPhoneNumber);
 int UpdatePhoneNumber(const char *ID_number);
-int UpdateCVVNumber(const char *ID_number);
 void replaceOldCVVDetails(char *str, const char *find, const char *newCVVNumber);
-int UpdateExpiryNumber(const char *ID_number);
+int UpdateCVVNumber(const char *ID_number);
 void replaceOldExpiryDetails(char *str, const char *find, const char *newExpiryNumber);
+int UpdateExpiryNumber(const char *ID_number);
 
 
 
