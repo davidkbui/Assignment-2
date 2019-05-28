@@ -1,4 +1,4 @@
-//student.h file
+/*student.h file*/
 #ifndef STUDENT_H
 
 #define DB_NAME "student_database"
