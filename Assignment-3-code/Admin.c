@@ -36,7 +36,7 @@ typedef struct user user_t;
 
 void open_admin_prompt();
 void search_for_student();
-void stu_db_add(user_t users[]);
+void stu_db_add(user_t users[], int num_students);
 void print_transactions();
 void edit_details();
 int add_student();
@@ -47,6 +47,7 @@ int valid_first_name(char first_name[]);
 int valid_last_name(char last_name[]);
 int is_digit(char user_id[]);
 int main(void);
+void read_student_db(user_t users[], int num_students);
 
 int month, day, year;
 user_t user, users[MAX_NO_USERS];
@@ -89,7 +90,8 @@ void inputCases (int input)
       case 3:   add_student(); 
                 main();
                 break;
-      case 4:   break;
+      case 4:   read_student_db(users, num_students);
+      			break;
       case 5:   exit(0); break;
     }
 }
@@ -105,7 +107,7 @@ void open_admin_prompt(){
     "1. View all transactions\n"
     "2. Search for transactions\n"
     "3. Add a new student\n"
-    "4. Search for student\n"
+    "4. Show all students\n"
     "5. Exit\n"
     "Enter choice 1 - 6>\n");   
 }
@@ -158,8 +160,9 @@ int add_student(){
     }else 
     {
       printf("Cannot add more students - memory full\n");
+      main();
     }
-    stu_db_add(users);
+    stu_db_add(users, num_students);
     main();
 }
 
@@ -205,16 +208,17 @@ int is_digit(char user_id[]){
  * Author: Tom Harris
 ******************************************************************************/
 
-void stu_db_add(user_t users[]){
+void stu_db_add(user_t users[], int num_students){
     int i 	= 0;
     FILE *fp;
     fp = fopen(STUDENT_DB_NAME, "w");
 
      if(fp == NULL){
         printf("Write error\n");
+        main();
     } 
 
-    for(i = 0; i < MAX_NO_USERS; i++){
+    for(i = 0; i < num_students; i++){
         fprintf(fp, "%s\n%s\n%s\n%02d\n%02d\n%04d\n%s\n",
                users[i].first_name, 
                users[i].last_name, 
@@ -223,13 +227,43 @@ void stu_db_add(user_t users[]){
                users[i].birthdate.month, 
                users[i].birthdate.year, 
                users[i].password);
-
-    fclose(fp);
     }
+    fclose(fp);
     main();
 }
 
+void read_student_db(user_t users[], int num_students){
+    int i = 0;
+    FILE *fp;
+    fp = fopen(STUDENT_DB_NAME, "r");
+    if(fp == NULL)
+    {
+        printf("Read error\n");
+        main();
+    }
+    for(i = 0; i < num_students; i++)
+    {
+        fscanf(fp, "%s\n%s\n%s\n%d\n%d\n%d\n%s\n",
+               users[i].first_name, 
+               users[i].last_name, 
+               users[i].user_id,
+               &users[i].birthdate.day, 
+               &users[i].birthdate.month, 
+               &users[i].birthdate.year, 
+               users[i].password);
+    }
+    for(i = 0; i < num_students; i++){
+	    printf("\nNAME: %s %s\n", users[i].first_name, users[i].last_name);
+	    printf("STUDENT ID: %s\n", users[i].user_id);
+	    printf("BIRTHDAY: %02d %02d %04d\n", users[i].birthdate.day, 
+	               						   users[i].birthdate.month, 
+	               						   users[i].birthdate.year);
+	}
 
+
+    fclose(fp);
+    main();
+}
 /*******************************************************************************
  * Function prints the history for either the day, month or year of previous 
  * transactions, depending on what the user has selected.
