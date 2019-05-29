@@ -122,7 +122,6 @@ void init_db()
     save_temp_to_db (fptrt, db_ptr);
     close_db_temp_file(fptrt);
     delete_temp_file();
-
 }
 
 FILE *open_db ()
@@ -153,4 +152,19 @@ void close_db (FILE *db_ptr)
 	close_db_file (db_ptr);
 	close_db_temp_file (fptrt);
 	delete_temp_file ();
+}
+
+void first_encryption()
+{
+    FILE *db_ptr, *fptrt;
+
+    db_ptr = open_existing_db_file();
+    fptrt = open_db_temp_file();
+    encrypt (fptrt, db_ptr);
+    close_db_file (db_ptr);
+    db_ptr = open_clean_db_file ();
+    save_temp_to_db (fptrt, db_ptr);
+    close_db_temp_file(fptrt);
+    delete_temp_file();
+   rewind (db_ptr);
 }

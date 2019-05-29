@@ -7,7 +7,11 @@
 #include <string.h>
 #include <math.h>
 
+#include "admin.h"
 #include "encryption.h"
+#include "interface.h"
+#include "student.h"
+
 
 #define MAX_NO_ITEMS 9
 #define MAX_NO_FIRSTNAME 20
@@ -88,8 +92,8 @@ void search_for_student();
 void edit();
 void print();
 void add ();
-void encrypt ();
-void compress ();
+void encrypt();
+void compress();
 
 
 /*******************************************************************************
@@ -98,21 +102,5 @@ void compress ();
 *******************************************************************************/
 int main (void)
 {
-  int selection;
-  FILE *db_ptr;
-  db_ptr = open_db();
-
-  printf("1. Encrypt file\n"
-"2. Open\n"
-"3. Close\n");
-
-scanf("%d", &selection);
-
-switch(selection) {
-  case 1: encrypt();
-  case 2: open_db();
-  case 3: close_db(db_ptr);
-  case 4: exit(0);
-}
-
+    intro_prompt();
 }

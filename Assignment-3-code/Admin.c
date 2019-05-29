@@ -1,7 +1,7 @@
 /*******************************************************************************
  * ADMIN - AUTHOR - TOM HARRIS
 *******************************************************************************/
-
+#include <stdio.h>
 /*******************************************************************************
  * This function prints the available options for the admin to chose from.
  * Author: Hayeon Kim
@@ -18,12 +18,12 @@ void open_admin_prompt(){
 
 
 /*******************************************************************************
- * Function searchs through the student database to locate whether a student 
+ * Function searchs through the student database to locate whether a student
  * number is within the database.
  * Author: Tom Harris
 *******************************************************************************/
 void search_for_student(){
-    
+
 }
 /*******************************************************************************
  * This function adds a new students to the student database
@@ -36,22 +36,15 @@ void add_student (){
 
 /*******************************************************************************
  * This function allows the user to edit and then update their details
- * in the database 
+ * in the database
  * Author: David Bui
 *******************************************************************************/
-void edit_details(){
-    
-}
 
 /*******************************************************************************
- * Function prints the history for either the day, month or year of previous 
+ * Function prints the history for either the day, month or year of previous
  * transactions, depending on what the user has selected.
  * Author: Mitch Winyard
 *******************************************************************************/
-
-void print_transactions(){
-    
-}
 
 /*******************************************************************************
  * This function encrypts the student database file
