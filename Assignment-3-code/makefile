@@ -12,7 +12,7 @@ admin.o: admin.c admin.h
 encryption.o: encryption.c encryption.h
 	$(CC) $(CFLAGS) -c -o encryption.o encryption.c
 
-interface.o: interface.c interface.h student.h
+interface.o: interface.c interface.h
 	$(CC) $(CFLAGS) -c -o interface.o interface.c
 
 student.o: student.c student.h

@@ -113,7 +113,7 @@ void adminMenu (void) {
 void inputCases (int input)
 {
     switch(input) {                                   /*choose function to run*/
-      case 1: Student_Main(); break;
+      case 1: Student_Login(); break;
       case 2: adminMenu(); break;
       case 3: exit(0); break;
     }
