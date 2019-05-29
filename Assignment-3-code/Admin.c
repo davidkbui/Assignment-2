@@ -4,17 +4,35 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
-
+#define MAX_NO_ITEMS 9
 #define MAX_NO_FIRSTNAME 20
 #define MAX_NO_LASTNAME 20
 #define MAX_NO_FULLNAME 40
+#define MAX_NO_CARDNUMBER 20
 #define MAX_NO_STUDENT_ID 8
 #define MAX_NO_USERS 5
 #define MAX_NO_PASSWORD 10
+#define MAX_NO_ITEM_NAME 10
 #define STUDENT_DB_NAME "students"
 #define TRANSACTION_DB_NAME "transactions"
 
+struct date{
+    int day;
+    int month;
+    int year;
+};
+typedef struct date date_t;
+
+struct user{
+    char first_name[MAX_NO_FIRSTNAME];
+    char last_name[MAX_NO_LASTNAME];
+    char user_id[MAX_NO_STUDENT_ID + 1];
+    date_t birthdate;
+    char password[MAX_NO_PASSWORD];
+    int payment_valid;
+    int is_admin;
+}; 
+typedef struct user user_t;
 
 void open_admin_prompt();
 void search_for_student();
@@ -28,18 +46,18 @@ int valid_date(int month, int day, int year);
 int valid_first_name(char first_name[]);
 int valid_last_name(char last_name[]);
 int is_digit(char user_id[]);
-int admin_main(void);
+int main(void);
 
 int month, day, year;
 user_t user, users[MAX_NO_USERS];
 int num_students = 0;
 
-int admin_main(void){
+int main(void){
     open_admin_prompt();
     int selection = getChoice();
     if(selection == -1)
     {
-        admin_main();
+        main();
     }
     inputCases(selection);
 
@@ -69,11 +87,10 @@ void inputCases (int input)
       case 1:   break;
       case 2:   break;
       case 3:   add_student(); 
-                admin_main();
+                main();
                 break;
       case 4:   break;
       case 5:   exit(0); break;
-      case 6:   stu_db_add(users); break;
     }
 }
 
@@ -90,7 +107,6 @@ void open_admin_prompt(){
     "3. Add a new student\n"
     "4. Search for student\n"
     "5. Exit\n"
-    "6. Save to database\n"
     "Enter choice 1 - 6>\n");   
 }
 
@@ -136,16 +152,15 @@ int add_student(){
         printf("Enter a new password\n");
         scanf("%s", user.password);
 
-
         users[num_students] = user;
-
         num_students = num_students + 1;
 
     }else 
     {
       printf("Cannot add more students - memory full\n");
     }
-    admin_main();
+    stu_db_add(users);
+    main();
 }
 
 
@@ -211,5 +226,40 @@ void stu_db_add(user_t users[]){
 
     fclose(fp);
     }
-    admin_main();
+    main();
 }
+
+
+/*******************************************************************************
+ * Function prints the history for either the day, month or year of previous 
+ * transactions, depending on what the user has selected.
+ * Author: Tom Harris
+*******************************************************************************/
+
+void print_transactions(){
+    
+}
+
+/*******************************************************************************
+ * Function searchs through the student database to locate whether a student 
+ * number is within the database.
+ * Author: Tom Harris
+******************************************************************************
+void search_for_student(){
+
+    user_t users; 
+    int student_num_choice[10]; 
+    int i;
+
+    printf("Enter student number>\n");
+    scanf("%c", student_num_choice);
+    printf("-------------------\nExisting student ID\n");
+    for(i=0; i < MAX_NO_STUDENT_ID; i++)
+    {
+        if(strcmp(student_num_choice, users[i].user_id)==0)
+            { 
+                printf("%c", users[i].user_id);
+            }
+    }   
+} 
+*/
