@@ -457,31 +457,30 @@ int UpdateBankNumber(const char *ID_number)
 
 int UpdatePhoneNumber(const char *ID_number)
 {
-
+    
     printf("-------------------------UpdatePhone-------------------\n");
-
-        /* File pointer to hold reference of input file */
+    /* File pointer to hold reference of input file */
     FILE * fPtr;
     FILE * fTemp;
-
+    
     char buffer[BUFFER_SIZE];
-    char find[100];
+    char find_phone[100];
 
-
+ 
     char newPhoneNumber[100];
 
-    {
-
-                printf("Bank Number Selected\n");
-                FILE * fPtr;
+    
+            
+                printf("Phone Number Selected\n"); 
+               
                 fPtr  = fopen(DB_NAME, "r");
-                char line[20];
+                char line[100];
                 int linenum =0;
                 int foundline =(linenum) ;
                 int lineStop = (foundline+4);
-                char find[100];
-
-
+                
+                
+                
 
                 /* return NULL if unable to open file. */
                 if (fPtr == NULL)
@@ -490,25 +489,27 @@ int UpdatePhoneNumber(const char *ID_number)
                     exit(EXIT_SUCCESS);
                 }
 
-           /*     printf("Enter ID>\n");
-                scanf ("%s", ID_number);*/
-                while (fgets(line, sizeof line, fPtr) != NULL)
+                while (fgets(line, sizeof line, fPtr) != NULL) 
                 {
+			int test=strncmp(ID_number, line, ID_SIZE);
+			printf("%d",test);     
                     linenum++;
-                    if (strncmp(ID_number, line, 4) ==0)
+                    if ( test == 0)
                     {
+			
                         break;
                     }
                 }
 
                 char student_details[100];
-                while (fgets(student_details, sizeof student_details, fPtr) != NULL)
-                    {
+                while (fgets(student_details, sizeof student_details, fPtr) != NULL) 
+                    {   
                         if (foundline == lineStop)
-                        {
+                        {  
                             printf("Old Phone Number is %s", student_details);
                             foundline++;
-                            memcpy(find, student_details, sizeof(find));
+                            memcpy(find_phone, student_details, sizeof(find_phone));
+			printf( "find = %s\n", find_phone);
 
                         }
                         else
@@ -525,32 +526,35 @@ int UpdatePhoneNumber(const char *ID_number)
 
 
                 /*printf("find was %s\n", find);*/
-                printf("Replace with: ");
+
+	printf( "confirm find = %s\n", find_phone);
+
+                printf("\nReplace with: ");
                 scanf("%s", newPhoneNumber);
 
-     }
+     
 
-
+                
     /*  Open all required files */
     fPtr  = fopen(DB_NAME, "r");
-    fTemp = fopen("replace.tmp", "w");
+    fTemp = fopen("replace.tmp", "w"); 
 
     /* fopen() return NULL if unable to open file in given mode. */
     if (fPtr == NULL || fTemp == NULL)
     {
         /* Unable to open file*/
         printf("\nUnable to open file.\n");
-        exit(EXIT_SUCCESS);
+        exit(0);
     }
 
     /*
-     * Read line from source file and write to destination
+     * Read line from source file and write to destination 
      * file after replacing given word.
      */
     while ((fgets(buffer, BUFFER_SIZE, fPtr)) != NULL)
     {
-        /* Replace all occurrence of word from current line*/
-        replaceOldBankDetails(buffer, find, newPhoneNumber);
+        /* Replace word from current line*/
+        replaceOldPhoneDetails(buffer, find_phone, newPhoneNumber);
 
         /* After replacing write it to temp file.*/
         fputs(buffer, fTemp);
@@ -568,7 +572,7 @@ int UpdatePhoneNumber(const char *ID_number)
     /* Rename temp file as original file */
     rename("replace.tmp", DB_NAME);
 
-    printf("\nSuccessfully replaced  '%s' with '%s'.", find, newPhoneNumber);
+    printf("\nSuccessfully replaced  '%s' with '%s'.", find_phone, newPhoneNumber);
 
     UpdateDetailsOptions(ID_number);
     return 0;
