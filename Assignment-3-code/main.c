@@ -102,6 +102,6 @@ void compress();
 *******************************************************************************/
 int main (void)
 {
-    init_db();
+    first_encryption();
     intro_prompt();
 }

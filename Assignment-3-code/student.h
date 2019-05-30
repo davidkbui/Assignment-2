@@ -1,6 +1,6 @@
 #ifndef STUDENT_H
 #define STUDENT_H
-int Student_Main();
+int student_main();
 int Student_Login();
 int student_menu(const char *ID_number);
 void check_my_details(const char *ID_number);
