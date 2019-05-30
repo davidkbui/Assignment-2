@@ -105,9 +105,12 @@ void check_password(const char *ID_number)
                 
                 else 
                 {
+			
+		print_bold_red();		
                     printf("Access Denied!\n");
-                    close_db(open_db);
+		print_reset_color();
                     student_login();
+                    close_db(open_db);
                 }
 
                 foundline++;
