@@ -12,7 +12,7 @@
 
 void check_password(const char *ID_number)
 {
-    char ID_password[10];
+    char ID_password[100];
     FILE * fPtr;
     fPtr  = fopen(DB_NAME, "r");
     char line[20];
@@ -52,8 +52,11 @@ void check_password(const char *ID_number)
 
                     printf("Enter password\n");
                      scanf ("%s", ID_password);
+	
+			int matching_passwords = 0;
+			matching_passwords = strcmp(ID_password,student_password);
 
-                     if ( strncmp( ID_password, student_password, strlen(ID_password) && (strlen(ID_password) == strlen(student_password))==0)
+                     if (matching_passwords==-10)
                         {
                     /* printf("succes password is:%s",  student_password);*/
                         fclose(fPtr);
@@ -61,7 +64,7 @@ void check_password(const char *ID_number)
 
                              }
                          else {
-                        printf("Access Denined!!!\n");
+                        printf("Access Denied!\n");
 
 
                              fclose(fPtr);

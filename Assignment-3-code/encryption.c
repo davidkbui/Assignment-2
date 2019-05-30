@@ -9,11 +9,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define DB_NAME "student_database"
+
 FILE *open_existing_db_file ()
 {
     FILE *fptr;
 
-    fptr=fopen("student_database.txt", "a+"); /* Opens the student_database.txt file in read-only mode */
+    fptr=fopen(DB_NAME, "a+"); /* Opens the student_database.txt file in read-only mode */
     if(fptr==NULL) /* If the student_database.txt file is not found, return this error message */
     {
         printf(" ERROR - File does not exist, or error in opening.\n");
@@ -27,7 +29,7 @@ FILE *open_clean_db_file ()
 {
     FILE *fptr;
 
-    fptr=fopen("student_database.txt", "w+"); /* Opens the student_database.txt file in read-only mode */
+    fptr=fopen(DB_NAME, "w+"); /* Opens the student_database.txt file in read-only mode */
     if(fptr==NULL) /* If the student_database.txt file is not found, return this error message */
     {
         printf(" ERROR - File does not exist, or error in opening.\n");
