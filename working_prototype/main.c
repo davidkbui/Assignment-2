@@ -5,6 +5,7 @@
 #include <math.h>
 #include "compression.c"
 #include "encryption.h"
+#include "interface.h"
 
 #define MAX_NO_ITEMS 6
 #define MAX_NO_FIRSTNAME 15
@@ -42,8 +43,6 @@ typedef struct user user_t;
 /*functions*/
 void login(user_t * users, int * no_of_user);
 void login_as_admin(user_t *users, int * no_of_user);
-void intro_prompt();
-void item_prompt();
 int load_user(user_t *users_p, int * no_of_user);
 void open_user_console(user_t user, user_t * users, int index, int * no_of_user);
 void open_admin_console(user_t *users, int * no_of_user);
@@ -103,16 +102,6 @@ int main (void)
         }
     }
     return 0;
-}
-
-
-void intro_prompt(){
-    printf("\n"
-    "Welcome to UTS uniform order page\n"
-    "1. Login as STUDENT\n"
-    "2. Login as ADMIN\n"
-    "3. Exit\n"
-    "Enter choice 1 - 3>\n");
 }
 
 int check_user_id_input(const char *entered_id, int * login_id){
@@ -397,18 +386,6 @@ int no_of_lines(){
     }
 
     return count_lines;
-}
-
-void item_prompt(){
-    printf("\n"
-    "Choose from options below\n"
-    "1. Shirt-L\n"
-    "2. Shirt-M\n"
-    "3. Shirt-S\n"
-    "4. Shorts-L\n"
-    "5. Shorts-M\n"
-    "6. Shorts-S\n"
-    "Enter choice 1 - 6>\n");
 }
 
 void order_uniform(user_t user){
