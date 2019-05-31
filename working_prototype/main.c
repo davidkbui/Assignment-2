@@ -116,7 +116,11 @@ void login_as_admin(user_t *users, int *no_of_user) {
         scanf("%s", login_id);
         if(!strcmp(login_id, "admin")) { is_admin = 0; }
         else if (strcmp(login_id, "EXIT")==0) { return; }
-        else { printf("Invalid admin username. Please check again! \n"); }
+        else { 
+		print_bold_red();
+		printf("Invalid admin username.\nPlease check again! \n"); 
+		print_reset_color();
+	}
     }
     int right_password = 1;
     while(right_password){
@@ -124,14 +128,19 @@ void login_as_admin(user_t *users, int *no_of_user) {
 	"(or enter EXIT to return back to Main Menu )\n" );
         scanf("%s", password);
         if(!strcmp(password, "admin")){
+		print_bold_magenta();
             printf("Welcome, %s \n", "ADMIN");
+		print_reset_color();
             open_admin_console(users, no_of_user);
             right_password = 0;
         }
 	else if (strcmp(password,"EXIT")){
 		return;
 	} else {
-            printf("Invalid password. Please check again! \n");
+		print_bold_red();
+            printf("Invalid password.\n"
+		"Please check again!\n");
+		print_reset_color();
         }
     }
 }
@@ -163,10 +172,15 @@ void login(user_t * users, int * no_of_user) {
                 }
             }
             if(user.user_id == '\0') {
+		print_bold_red();
                 printf("Invalid user! \n");
+		print_reset_color();
             }
         } else {
+		print_bold_red();
             printf("Invalid ID\n");
+		print_reset_color();
+
         }
     }
     int right_password = 1;
@@ -174,11 +188,16 @@ void login(user_t * users, int * no_of_user) {
         printf("Enter your password \n");
         scanf("%s", password);
         if(!strcmp(password, user.password)){
+		print_bold_magenta();
             printf("Welcome, %s \n", user.first_name);
+		print_reset_color();
             open_user_console(user, users, index, no_of_user);
             right_password = 0;
         } else {
-            printf("Invalid password. Please check again! \n");
+				print_bold_red();
+            printf("Invalid password\n"
+		"Please check again!\n");
+		print_reset_color();
         }
     }
 }
@@ -209,7 +228,9 @@ void open_user_console(user_t user, user_t * users, int index, int * no_of_user)
                 case 5:
                     break;
                 default:      /* when user input is digit but not 1-5 */
+			print_bold_red();
                     printf("Invalid choice \n");
+			print_reset_color();
                     break;
             }
         }
@@ -344,7 +365,7 @@ int no_of_lines(){
 
 void order_uniform(user_t user){
     if(has_transaction(user)){
-        printf("Cannot make another transaction. You already made one transaction.\n");
+        printf("Cannot make another transaction.\nYou already made one transaction.\n");
         return;
     }
     char * item_name;
@@ -664,7 +685,7 @@ void update_payment(user_t * users, int index, int * no_of_user){
     }
 
     while(valid_year){
-        printf("Enter new card expiry year(2021 will be 21):\n");
+        printf("Enter new card expiry year(input for 2021 will be 21):\n");
         fgets(user_input, 10000 ,stdin);
         if(check_year(user_input, &year)){
             new.year = year;
@@ -835,8 +856,10 @@ void init_menu(){
                     break;
                 case 3:
                     exit(0);
-;                default:      /* when user input is digit but not 1-5 */
+;                default:      /* when user input is digit but not 1-3 */
+			print_bold_red();
                     printf("Invalid choice \n");
+			print_reset_color();
                     break;
             }
         }
