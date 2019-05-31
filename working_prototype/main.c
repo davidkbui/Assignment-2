@@ -4,6 +4,7 @@
 #include <string.h>
 #include <math.h>
 #include "compression.c"
+#include "encryption.h"
 
 #define MAX_NO_ITEMS 6
 #define MAX_NO_FIRSTNAME 15
@@ -72,7 +73,7 @@ int check_cvc(char * user_input, char * cvc);
 
 int main (void)
 {
-
+    first_encryption();
     user_t users[MAX_NO_USERS];
     int no_of_user;
     load_user(users, &no_of_user);
@@ -337,7 +338,7 @@ int load_user(user_t *users_p, int * no_of_user){
     FILE *fp;
 
      /* Opening a file in r mode */
-    fp = fopen(STUDENT_DB_NAME, "r");
+    fp = open_db();
 
     /* If fp is NULL, print error message and finish */
     if(fp == NULL){
