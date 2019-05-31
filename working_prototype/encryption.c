@@ -9,8 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define DB_NAME "students"
-
+#define DB_NAME "student_database"
+	
 FILE *open_existing_db_file ()
 {
     FILE *fp;

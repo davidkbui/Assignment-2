@@ -18,7 +18,7 @@
 #define MAX_NO_CARD 16
 #define MAX_NO_CVC 3
 #define MAX_NO_PHONE 10
-#define STUDENT_DB_NAME "students"
+#define STUDENT_DB_NAME "student_database"
 
 /*Insert structs here*/
 struct payment{
@@ -73,7 +73,6 @@ int check_cvc(char * user_input, char * cvc);
 
 int main (void)
 {
-    first_encryption();
     user_t users[MAX_NO_USERS];
     int no_of_user;
     load_user(users, &no_of_user);
@@ -159,13 +158,17 @@ void login_as_admin(user_t *users, int *no_of_user) {
     }
     int right_password = 1;
     while(right_password){
-        printf("Enter your password \n");
+        printf("Enter your password \n"
+	"(or enter EXIT to return back to Main Menu )\n" );
         scanf("%s", password);
         if(!strcmp(password, "admin")){
             printf("Welcome, %s \n", "ADMIN");
             open_admin_console(users, no_of_user);
             right_password = 0;
-        } else {
+        }
+	else if (strcmp(password,"EXIT")){
+		return;
+	} else {
             printf("Invalid password. Please check again! \n");
         }
     }
@@ -338,7 +341,7 @@ int load_user(user_t *users_p, int * no_of_user){
     FILE *fp;
 
      /* Opening a file in r mode */
-    fp = open_db();
+	fp=open_db();
 
     /* If fp is NULL, print error message and finish */
     if(fp == NULL){
@@ -350,7 +353,7 @@ int load_user(user_t *users_p, int * no_of_user){
     int i = 0;
 
     /* while incrementing i is not equal to no_of_lines which
-        stores the number of new lines (=flights) in text file,
+        stores the number of new lines (=flights) in text file,	
         read from file and store that into flights array */
     while(i != no_of_lines()){
         fscanf(fp, "%s %s %d %s %s %s %d %d %s",
@@ -361,7 +364,7 @@ int load_user(user_t *users_p, int * no_of_user){
     }
     *no_of_user = i;
     /* close file */
-    fclose(fp);
+    open_db(open_db);
     return 0;
 }
 
@@ -719,7 +722,7 @@ void update_payment(user_t * users, int index, int * no_of_user){
     }
 
     while(valid_year){
-        printf("Enter new card expiry year:\n");
+        printf("Enter new card expiry year(2021 will be 21):\n");
         fgets(user_input, 10000 ,stdin);
         if(check_year(user_input, &year)){
             new.year = year;
