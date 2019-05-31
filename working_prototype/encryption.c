@@ -118,8 +118,8 @@ void delete_temp_file ()
 }
 
 /*******************************************************************************
-* The following functions are PUBLIC and can be called into the code. 
-* open_db should ALWAYS be followed by close_db once the program has completed 
+* The following functions are PUBLIC and can be called into the code.
+* open_db should ALWAYS be followed by close_db once the program has completed
 * other fucntions.
 *******************************************************************************/
 
@@ -127,7 +127,7 @@ void delete_temp_file ()
 * This function is used to decrypt and open the database. Once the database is
 * in plain, it is presented to the program for view, scan, edit etc.
 * IMPORTANT - The database is now in PLAIN TEXT.
-* Users cannot edit the database in plain form outside of the program as 
+* Users cannot edit the database in plain form outside of the program as
 * the program is holding the file
 *******************************************************************************/
 FILE *open_db ()
@@ -147,7 +147,7 @@ FILE *open_db ()
 }
 
 /*******************************************************************************
-* This function is used to encrypt and close the database. Once the database 
+* This function is used to encrypt and close the database. Once the database
 * in no longer needed to be in plain, this function should be run immediately.
 * IMPORTANT - The database is now in CIPHER TEXT. Futher using the database will
 * now return unreadable data.

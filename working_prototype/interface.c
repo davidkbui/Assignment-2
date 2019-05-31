@@ -26,91 +26,23 @@ void print_logo(void){
 }
 
 /*******************************************************************************
- * This prints the inital welcome prompt.
+ * This changes text colors
 *******************************************************************************/
 void print_bold_magenta(){
   printf("\033[1;35m");
-}
-
-/*******************************************************************************
- * This prints the inital welcome prompt.
-*******************************************************************************/
-void print_magenta(){
-  printf("\033[0;35m");
 }
 
 void print_bold_red(){
   printf("\033[0;31m");
 }
 
-/*******************************************************************************
- * This prints the inital welcome prompt.
-*******************************************************************************/
 void print_reset_color(){
   printf("\033[0m");
 }
 
 /*******************************************************************************
- * This prints the inital welcome prompt.
+ * This prints the inital welcome prompts.
 *******************************************************************************/
-
-/*******************************************************************************
- * Function Description
-*******************************************************************************/
-void studentMenu (void) {
-  printf("User Menu");
-}
-
-
-int getChoice(){
-  int choice = 0;
-
-  if (scanf("%d", &choice) == 1)                         /*if input is scanned*/
-  {
-    if(choice < 1 || choice > 3) {
-      printf("Invalid choice\n");
-      return -1;
-    }
-
-    else {
-      return choice;                                      /*1-6 returns choice*/
-    }
-  }
-  else return -1;                                   /*Logic for resetting main*/
-}
-
-int matchID(char ID[10]) {
-  int i, validFlag, p;
-  p = strlen(ID);
-  for (i=0; i<p; i++)
-    {
-      if (ID[i] >= '0' && ID[i] <= '9')
-        {
-          validFlag = 1;
-        }
-      else {
-            printf("Invalid ID, try again\n");
-            scanf("%s", ID);
-            validFlag = 0;
-      }
-    }
-  return validFlag;
-  }
-
-void adminMenu (void) {
-  char ID[10];
-  printf(
-    "Admin Menu\n"
-    "Type in your ID\n");
-    scanf("%s", &ID[10]);
-    int isValidFlag = matchID(ID);
-    while (isValidFlag == 0)
-      {
-        printf("Invalid ID\n");
-          printf("%d", isValidFlag);
-        scanf("%s", &ID[10]);
-      }
-}
 
 void intro_prompt(){
     print_bold_magenta();
@@ -157,5 +89,3 @@ void open_admin_prompt(){
     "5. Exit\n"
     "Enter choice 1 - 5>\n");
 }
-
-

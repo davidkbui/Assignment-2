@@ -96,6 +96,10 @@ int check_user_id_input(const char *entered_id, int * login_id){
     return 1;
 }
 
+/*******************************************************************************
+Checks if input is all numbers
+*******************************************************************************/
+
 int is_right_format_number(char c){
     if((c >= '0' && c <= '9')){
        return 1;
@@ -110,33 +114,36 @@ void login_as_admin(user_t *users, int *no_of_user) {
     int is_admin = 1;
 
     while(is_admin){
-        printf("Enter your id \n");
-        printf("(or enter EXIT to return back to Main Menu ) \n");
+      printf("Enter your id \n");
+      printf("(or enter EXIT to return back to Main Menu ) \n");
 
-        scanf("%s", login_id);
-        if(!strcmp(login_id, "admin")) { is_admin = 0; }
-        else if (strcmp(login_id, "EXIT")==0) { return; }
-        else { 
-		print_bold_red();
-		printf("Invalid admin username.\nPlease check again! \n"); 
-		print_reset_color();
-	}
+      scanf("%s", login_id);
+      if(!strcmp(login_id, "admin")) { is_admin = 0; }
+      else if (strcmp(login_id, "EXIT")==0) return;
+      else
+      {
+        print_bold_red();
+		    printf("Invalid admin username.\nPlease check again! \n");
+		    print_reset_color();
+	    }
     }
+
     int right_password = 1;
     while(right_password){
         printf("Enter your password \n"
-	"(or enter EXIT to return back to Main Menu )\n" );
+	      "(or enter EXIT to return back to Main Menu )\n" );
         scanf("%s", password);
         if(!strcmp(password, "admin")){
-		print_bold_magenta();
+		        print_bold_magenta();
             printf("Welcome, %s \n", "ADMIN");
-		print_reset_color();
+		        print_reset_color();
             open_admin_console(users, no_of_user);
             right_password = 0;
         }
 	else if (strcmp(password,"EXIT")){
 		return;
-	} else {
+	}
+  else {
 		print_bold_red();
             printf("Invalid password.\n"
 		"Please check again!\n");
@@ -172,14 +179,14 @@ void login(user_t * users, int * no_of_user) {
                 }
             }
             if(user.user_id == '\0') {
-		print_bold_red();
+		            print_bold_red();
                 printf("Invalid user! \n");
-		print_reset_color();
+		            print_reset_color();
             }
         } else {
-		print_bold_red();
+		        print_bold_red();
             printf("Invalid ID\n");
-		print_reset_color();
+		        print_reset_color();
 
         }
     }
@@ -188,9 +195,9 @@ void login(user_t * users, int * no_of_user) {
         printf("Enter your password \n");
         scanf("%s", password);
         if(!strcmp(password, user.password)){
-		print_bold_magenta();
+		        print_bold_magenta();
             printf("Welcome, %s \n", user.first_name);
-		print_reset_color();
+		        print_reset_color();
             open_user_console(user, users, index, no_of_user);
             right_password = 0;
         } else {
@@ -228,9 +235,9 @@ void open_user_console(user_t user, user_t * users, int index, int * no_of_user)
                 case 5:
                     break;
                 default:      /* when user input is digit but not 1-5 */
-			print_bold_red();
+			              print_bold_red();
                     printf("Invalid choice \n");
-			print_reset_color();
+			              print_reset_color();
                     break;
             }
         }
@@ -317,7 +324,7 @@ int load_user(user_t *users_p, int * no_of_user){
     int i = 0;
 
     /* while incrementing i is not equal to no_of_lines which
-        stores the number of new lines (=flights) in text file,	
+        stores the number of new lines (=flights) in text file,
         read from file and store that into flights array */
     while(i != no_of_lines()){
         fscanf(fp, "%s %s %d %s %s %s %d %d %s",
@@ -331,6 +338,10 @@ int load_user(user_t *users_p, int * no_of_user){
     open_db(open_db);
     return 0;
 }
+
+/*******************************************************************************
+ * To check for multiple students
+*******************************************************************************/
 
 int no_of_lines(){
      /* Pointer to the file */
@@ -362,6 +373,11 @@ int no_of_lines(){
 
     return count_lines;
 }
+
+/*******************************************************************************
+ * This allows for a student to create one transaction and checks if transaction
+ exists
+*******************************************************************************/
 
 void order_uniform(user_t user){
     if(has_transaction(user)){
@@ -459,6 +475,10 @@ int has_transaction(user_t user){
     return 0;
 }
 
+/*******************************************************************************
+ * This allows for students to check their details
+*******************************************************************************/
+
 void view_my_details(user_t * users, int index){
 	print_bold_magenta();
     printf("PERSONAL DETAILS\n");
@@ -485,6 +505,10 @@ void expiry(char * expiry, int month, int year){
     i += sprintf(&expiry[i], "%02d", year);
 }
 
+/*******************************************************************************
+ * Student viewing their transaction
+*******************************************************************************/
+
 void view_transactions(){
     transaction_t * transactions;
     int i, size = 0;
@@ -500,6 +524,10 @@ void view_transactions(){
             transactions[i].quantity);
     }
 }
+
+/*******************************************************************************
+ * This function searches for the transaction through a student ID input
+*******************************************************************************/
 
 
 void search_transaction(){
@@ -655,6 +683,9 @@ int check_user_name(char * user_input,char * name){
     return 1;
 }
 
+/*******************************************************************************
+ * This function makes updates to payment details
+*******************************************************************************/
 
 void update_payment(user_t * users, int index, int * no_of_user){
     char expiry_date[6];
@@ -768,6 +799,10 @@ int check_card_number(char * user_input, char * card_number){
     return 1;
 }
 
+/*******************************************************************************
+ * Checks if month is between 1-12, if year is 2019, between 6-12
+*******************************************************************************/
+
 int check_month(char * user_input, int * month, int year){
     if(strlen(user_input) > 3){
         return 0;
@@ -815,6 +850,10 @@ int check_year(char * user_input, int * year){
     return 1;
 }
 
+/*******************************************************************************
+ * Checks if CVC has 3 numbers
+*******************************************************************************/
+
 int check_cvc(char * user_input, char * cvc){
     if(strlen(user_input) != MAX_NO_CVC + 1){
         return 0;
@@ -832,7 +871,7 @@ int check_cvc(char * user_input, char * cvc){
     return 1;
 }
 
-void init_menu(){    
+void init_menu(){
 	user_t users[MAX_NO_USERS];
     int no_of_user;
     load_user(users, &no_of_user);
