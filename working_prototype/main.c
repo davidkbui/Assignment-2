@@ -193,7 +193,7 @@ void login(user_t * users, int * no_of_user) {
                 printf("Invalid user! \n");
             }
         } else {
-            printf("Invalid ID");
+            printf("Invalid ID\n");
         }
     }
     int right_password = 1;
