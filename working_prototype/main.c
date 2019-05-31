@@ -275,6 +275,7 @@ int save_student_db(const user_t *users_p, int * no_of_user){
 
     /* close file */
     fclose(fp);
+	first_encryption();
     return 0;
 }
 /*****************************************************************************/
