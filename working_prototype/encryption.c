@@ -10,7 +10,12 @@
 #include <stdlib.h>
 
 #define DB_NAME "student_database"
-	
+
+/*******************************************************************************
+* The following functions are PRIVATE and should not be used on their own by the
+* program.
+*******************************************************************************/
+
 FILE *open_existing_db_file ()
 {
     FILE *fp;
@@ -112,20 +117,19 @@ void delete_temp_file ()
     remove("temp.txt");
 }
 
-void init_db()
-{
-    FILE *db_ptr, *fptrt;
+/*******************************************************************************
+* The following functions are PUBLIC and can be called into the code. 
+* open_db should ALWAYS be followed by close_db once the program has completed 
+* other fucntions.
+*******************************************************************************/
 
-    db_ptr = open_existing_db_file();
-    fptrt = open_db_temp_file();
-    encrypt (fptrt, db_ptr);
-    close_db_file (db_ptr);
-    db_ptr = open_clean_db_file ();
-    save_temp_to_db (fptrt, db_ptr);
-    close_db_temp_file(fptrt);
-    delete_temp_file();
-}
-
+/*******************************************************************************
+* This function is used to decrypt and open the database. Once the database is
+* in plain, it is presented to the program for view, scan, edit etc.
+* IMPORTANT - The database is now in PLAIN TEXT.
+* Users cannot edit the database in plain form outside of the program as 
+* the program is holding the file
+*******************************************************************************/
 FILE *open_db ()
 {
     FILE *db_ptr, *fptrt;
@@ -142,6 +146,12 @@ FILE *open_db ()
     return db_ptr;
 }
 
+/*******************************************************************************
+* This function is used to encrypt and close the database. Once the database 
+* in no longer needed to be in plain, this function should be run immediately.
+* IMPORTANT - The database is now in CIPHER TEXT. Futher using the database will
+* now return unreadable data.
+*******************************************************************************/
 void close_db (FILE *db_ptr)
 {
     FILE *fptrt;
@@ -155,7 +165,12 @@ void close_db (FILE *db_ptr)
 	close_db_temp_file (fptrt);
 	delete_temp_file ();
 }
-
+/*******************************************************************************
+* This function is used to swap the database from one encryption state to the other
+* as XOR is symmetrical.
+* If at any stage the database is NOT encrypted when the program initialises, run
+* this function to ensure the database in in the correct state.
+*******************************************************************************/
 void first_encryption()
 {
     FILE *db_ptr, *fptrt;
