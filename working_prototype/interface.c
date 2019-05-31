@@ -136,4 +136,26 @@ void item_prompt(){
     "Enter choice 1 - 6>\n");
 }
 
+void open_user_prompt(){
+    printf("\n"
+    "Welcome to UTS uniform order page\n"
+    "1. Order uniform\n"
+    "2. View your transaction\n"
+    "3. View my details\n"
+    "4. Update my payment details\n"
+    "5. Exit\n"
+    "Enter choice 1 - 5>\n");
+}
+
+void open_admin_prompt(){
+    printf("\n"
+    "Hello, You are in administration mode\n"
+    "1. View all transactions\n"
+    "2. Search for trasactions\n"
+    "3. Search for student\n"
+    "4. Add new student\n"
+    "5. Exit\n"
+    "Enter choice 1 - 5>\n");
+}
+
 

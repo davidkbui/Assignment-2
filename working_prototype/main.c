@@ -69,38 +69,11 @@ int check_card_number(char * user_input, char * card_number);
 int check_year(char * user_input, int * year);
 int check_month(char * user_input, int * month, int year);
 int check_cvc(char * user_input, char * cvc);
+void init_menu();
 
 int main (void)
 {
-    user_t users[MAX_NO_USERS];
-    int no_of_user;
-    load_user(users, &no_of_user);
-
-    /*int variable that would store user input for menu*/
-    int choice = 0;
-
-    /*menu would loop unless user enters 3 */
-    while(choice != 3) {
-        intro_prompt();    /* print login prompt */
-        if(scanf("%d", &choice) != 1){     /* if user input is NOT digit */
-            while ((getchar()) != '\n');      /* flush input buffer */
-            printf("Invalid choice \n");      /* prints error message */
-        } else {     /* if user input is digit */
-            switch(choice){
-                case 1:
-                    login(users, &no_of_user);
-                    break;
-                case 2:
-                    login_as_admin(users, &no_of_user);
-                    break;
-                case 3:
-                    exit(0);
-;                default:      /* when user input is digit but not 1-5 */
-                    printf("Invalid choice \n");
-                    break;
-            }
-        }
-    }
+	init_menu();
     return 0;
 }
 
@@ -210,27 +183,7 @@ void login(user_t * users, int * no_of_user) {
     }
 }
 
-void open_user_prompt(){
-    printf("\n"
-    "Welcome to UTS uniform order page\n"
-    "1. Order uniform\n"
-    "2. View your transaction\n"
-    "3. View my details\n"
-    "4. Update my payment details\n"
-    "5. Exit\n"
-    "Enter choice 1 - 5>\n");
-}
 
-void open_admin_prompt(){
-    printf("\n"
-    "Hello, You are in administration mode\n"
-    "1. View all transactions\n"
-    "2. Search for trasactions\n"
-    "3. Search for student\n"
-    "4. Add new student\n"
-    "5. Exit\n"
-    "Enter choice 1 - 5>\n");
-}
 
 void open_user_console(user_t user, user_t * users, int index, int * no_of_user){
     int choice = 0;
@@ -300,7 +253,7 @@ int save_student_db(const user_t *users_p, int * no_of_user){
     FILE *fp;
 
      /* Opening a file in w mode*/
-    fp = fopen(STUDENT_DB_NAME, "w");
+    fp = open_db();
 
     /* If there is issue opening file, print error message and finish */
     if(fp == NULL){
@@ -464,8 +417,10 @@ void view_my_transaction(user_t user){
 	    transaction = transactions[i];
         }
     }
+	print_bold_magenta();
     printf("Item purchased  Quantity\n");
     printf("--------------- ---------------\n");
+	print_reset_color();
     printf("%-15s %-15d\n",  transaction.item_name, transaction.quantity);
 }
 
@@ -483,15 +438,19 @@ int has_transaction(user_t user){
 }
 
 void view_my_details(user_t * users, int index){
+	print_bold_magenta();
     printf("PERSONAL DETAILS\n");
     printf("First Name      Last Name       Student ID      Phone Number \n");
     printf("--------------- --------------- --------------- --------------- \n");
+	print_reset_color();
     printf("%-15s %-15s %-15d %-15s\n\n", users[index].first_name, users[index].last_name, users[index].user_id, users[index].phone);
     char expiry_date[6];
     expiry(expiry_date, users[index].payment.month, users[index].payment.year);
+	print_bold_magenta();
     printf("PAYMENT DETAILS\n");
     printf("Card Number          Expiry Date     CVC \n");
     printf("-------------------- --------------- ------\n");
+	print_reset_color();
     printf("%-20s %-15s %-5s\n",
              users[index].payment.card_number, expiry_date, users[index].payment.cvc);
 }
@@ -510,8 +469,10 @@ void view_transactions(){
     decompress_to_file();
     transactions = read_database(&size);
     remove_database();
+	print_bold_magenta();
     printf("Transaction User ID  Item purchased  Quantity\n");
     printf("-------------------- --------------- ---------------\n");
+	print_reset_color();
     for(i = 0 ; i < size; i++){
        printf("%-20d %-15s %-15d\n", transactions[i].user_id, transactions[i].item_name,
             transactions[i].quantity);
@@ -538,8 +499,10 @@ void search_transaction(){
         }
     }
     if(has_item){
+	print_bold_magenta();
         printf("Transaction User ID  Item purchased  Quantity\n");
         printf("-------------------- --------------- ---------------\n");
+	print_reset_color();
         printf("%-20d %-15s %-15d\n", transaction.user_id, transaction.item_name,
             transaction.quantity);
     } else {
@@ -562,8 +525,10 @@ void search_student(user_t *users){
         }
     }
     if(existing_user){
+	print_bold_magenta();
         printf("First Name      Last Name       Student ID      Phone Number \n");
         printf("--------------- --------------- --------------- --------------- \n");
+	print_reset_color();
         printf("%-15s %-15s %-15d %-15s\n", user.first_name, user.last_name, user.user_id, user.phone);
     } else {
         printf("No students in database\n");
@@ -589,8 +554,7 @@ void add_student(user_t *users, int * no_of_user) {
     int signup_id;
     char first_name[MAX_NO_FIRSTNAME];
     char last_name[MAX_NO_LASTNAME];
-    printf("%d", no_of_lines());
-    printf("no of user: %d ", *no_of_user);
+    printf("Number of students: %d ", *no_of_user);
     while ((getchar()) != '\n');
     while(valid_id){
         printf("Enter new student id:\n");
@@ -731,7 +695,7 @@ void update_payment(user_t * users, int index, int * no_of_user){
         }
     }
 
-    printf("Print 'Enter' key to view details\n");
+    printf("Press 'Enter' key to view details\n");
     while ((getchar()) != '\n');
 
     printf("CURRENT PAYMENT DETAILS\n");
@@ -844,4 +808,36 @@ int check_cvc(char * user_input, char * cvc){
         cvc[i] = user_input[i];
     }
     return 1;
+}
+
+void init_menu(){    
+	user_t users[MAX_NO_USERS];
+    int no_of_user;
+    load_user(users, &no_of_user);
+
+    /*int variable that would store user input for menu*/
+    int choice = 0;
+
+    /*menu would loop unless user enters 3 */
+    while(choice != 3) {
+        intro_prompt();    /* print login prompt */
+        if(scanf("%d", &choice) != 1){     /* if user input is NOT digit */
+            while ((getchar()) != '\n');      /* flush input buffer */
+            printf("Invalid choice \n");      /* prints error message */
+        } else {     /* if user input is digit */
+            switch(choice){
+                case 1:
+                    login(users, &no_of_user);
+                    break;
+                case 2:
+                    login_as_admin(users, &no_of_user);
+                    break;
+                case 3:
+                    exit(0);
+;                default:      /* when user input is digit but not 1-5 */
+                    printf("Invalid choice \n");
+                    break;
+            }
+        }
+    }
 }
